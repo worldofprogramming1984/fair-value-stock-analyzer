@@ -39,6 +39,15 @@ enter a ticker.
 > Python 3.12 is recommended (`.python-version`); some data dependencies may not yet ship
 > wheels for very new Python versions.
 
+## Run the tests
+
+```bash
+pip install -r requirements-dev.txt
+pytest tests/ -q
+```
+
+The suite (prompt routing, data formatting, LLM guards) runs without an API key or network.
+
 ## Deploy free & share a link (Streamlit Community Cloud)
 
 1. Push this repo to GitHub (already done if you used `gh`).
