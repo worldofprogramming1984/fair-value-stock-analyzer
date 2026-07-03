@@ -24,6 +24,7 @@ SKILLS = [
     "stock-fv-communication",
     "stock-fv-retail",
     "stock-fv-healthcare",
+    "stock-fv-unprofitable-growth",
     "stock-fv-general",
 ]
 

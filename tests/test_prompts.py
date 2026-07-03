@@ -2,10 +2,11 @@
 from engine import prompts
 
 
-def test_ten_skills_registered():
-    assert len(prompts.SKILLS) == 10
+def test_all_skills_registered():
+    assert len(prompts.SKILLS) == 11
     assert "stock-fv-financials" in prompts.SKILLS
     assert "stock-fv-ai-capex" in prompts.SKILLS
+    assert "stock-fv-unprofitable-growth" in prompts.SKILLS
 
 
 def test_methodology_files_load_and_strip_frontmatter():

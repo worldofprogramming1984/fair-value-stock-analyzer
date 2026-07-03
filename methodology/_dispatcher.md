@@ -41,9 +41,15 @@ rationale so a misclassification is visible, never silent.
 7. **Communication** — media/streaming/entertainment or telecom carrier
    → skill `stock-fv-communication`
 8. **Retail / e-commerce** → skill `stock-fv-retail`
-9. **Asset-light technology** — software/SaaS, internet platform, fabless semi (FCF
-   reflects earning power, not in an AI-capex build) → skill `stock-fv-technology`
-10. **Anything else** (diversified industrial, staple, business services) →
+9. **Currently unprofitable growth company** — negative net income AND negative/near-zero
+   free cash flow, with losses driven by growth-stage scaling (heavy S&M / R&D / stock
+   comp), NOT by cyclicality (→ #3 commodity) or a clinical pipeline (→ #4 healthcare) or
+   a lending book (→ #2 fintech). E.g. pre-profit SaaS, unprofitable marketplaces/EV
+   makers/consumer platforms → skill `stock-fv-unprofitable-growth`. This profitability
+   gate takes priority over the technology/general routing below.
+10. **Asset-light technology** — software/SaaS, internet platform, fabless semi (FCF
+    reflects earning power, not in an AI-capex build) → skill `stock-fv-technology`
+11. **Anything else** (diversified industrial, staple, business services) →
     skill `stock-fv-general`
 
 ### 3. Multi-segment → sum-of-the-parts
