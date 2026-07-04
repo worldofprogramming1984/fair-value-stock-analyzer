@@ -15,6 +15,8 @@ It also has a **Portfolio analysis** mode (see below).
 > ⚠️ **Educational tool — not financial advice.** Estimates come from public data
 > and an LLM and may be wrong or stale. Always do your own research.
 
+For architecture, methodology, and design decisions, see **[DESIGN.md](DESIGN.md)**.
+
 ## How it works
 
 - **Data:** [yfinance](https://github.com/ranaroussi/yfinance) (free, no key) for price
