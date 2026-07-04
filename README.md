@@ -10,6 +10,8 @@ banks (deposits aren't debt), commodity producers (point-in-time earnings mislea
 AI-capex megacaps (current FCF is temporarily depressed), pharma (patent cliffs +
 GAAP distortion). This tool routes each ticker to the right method.
 
+It also has a **Portfolio analysis** mode (see below).
+
 > ⚠️ **Educational tool — not financial advice.** Estimates come from public data
 > and an LLM and may be wrong or stale. Always do your own research.
 
@@ -38,6 +40,29 @@ enter a ticker.
 
 > Python 3.12 is recommended (`.python-version`); some data dependencies may not yet ship
 > wheels for very new Python versions.
+
+## Portfolio analysis mode
+
+Switch to **Portfolio analysis** in the sidebar to get a portfolio's strengths and
+weaknesses — concentration, diversification, hidden correlation (e.g. several holdings
+riding one theme), and bear-market durability.
+
+- **Input:** upload a **screenshot** of your holdings (Claude vision reads them) or **enter
+  them manually** in the table. Review/edit the parsed rows before analyzing. (A live
+  Robinhood connection isn't offered here — it's tied to a single account and can't
+  securely serve other users in a shared app.)
+- **Guardrail:** the analyst is **not a certified financial advisor** and says so. By
+  default it gives **analysis only — no buy/sell/allocation suggestions.**
+- **Owner mode (optional):** you can unlock suggestions for yourself with a passphrase.
+  Generate its hash and set it as a secret — nothing sensitive lives in the repo:
+
+  ```bash
+  python scripts/make_owner_hash.py "your secret passphrase"
+  ```
+
+  Put the printed `OWNER_PASSPHRASE_HASH = "…"` in Streamlit Cloud → app → Settings →
+  Secrets (or export it as an env var locally). Enter the passphrase in the sidebar to
+  switch on owner mode. If no hash is configured, everyone is a guest (analysis only).
 
 ## Run the tests
 
