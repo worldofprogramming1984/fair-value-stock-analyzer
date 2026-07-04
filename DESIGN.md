@@ -116,8 +116,13 @@ growth companies to `unprofitable-growth` before the technology/general fallback
 
 ### Single-stock
 ```
-ticker → yfinance fundamentals → classify (Haiku) → value (Sonnet/Opus + web search) → Markdown
+ticker → yfinance fundamentals → classify (Haiku) → derive ASSUMPTIONS →
+         user reviews/edits assumptions → value (Sonnet/Opus + web search) → Markdown
 ```
+The assumptions step is interactive: the app derives default inputs (base, growth,
+discount rate, terminal growth, sector-specific), shows them in an **editable panel**, and
+the user either edits or clicks *Proceed* before the valuation runs. In Claude Code the
+skills do the same conversationally (print an `ASSUMPTIONS` block, ask, then compute).
 
 ### Portfolio
 ```

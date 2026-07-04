@@ -70,50 +70,101 @@ if mode == "Single-stock fair value":
                             help="Lets the model pull consensus, Morningstar, Seeking Alpha, "
                             "segments, and patent dates. Adds a few cents per run.")
 
-    c1, c2 = st.columns([3, 1])
-    ticker = c1.text_input("Ticker", placeholder="e.g. MSFT, JPM, XOM, ABBV, AMZN").strip().upper()
-    c2.write(" "); c2.write(" ")
-    run = c2.button("Analyze", type="primary", use_container_width=True)
+    def _reset_fv():
+        for k in ("fv_stage", "fv_ticker", "fv_data", "fv_block", "fv_cls", "fv_assump", "fv_result"):
+            st.session_state.pop(k, None)
 
-    if run:
-        if not api_key:
-            st.warning("Add your Anthropic API key in the sidebar.")
-            st.stop()
-        if not ticker:
-            st.warning("Enter a ticker symbol.")
-            st.stop()
-        try:
-            with st.spinner(f"Fetching market data for {ticker}…"):
-                d = _fetch(ticker)
-                block = datamod.format_data_block(d)
-        except datamod.DataError as e:
-            st.error(str(e)); st.stop()
-        except Exception as e:
-            st.error(f"Could not fetch data for {ticker}: {e}"); st.stop()
+    stage = st.session_state.get("fv_stage")
 
+    # ---- Stage 0: ticker entry ----
+    if not stage:
+        c1, c2 = st.columns([3, 1])
+        ticker = c1.text_input("Ticker", placeholder="e.g. MSFT, JPM, XOM, ABBV, AMZN").strip().upper()
+        c2.write(" "); c2.write(" ")
+        if c2.button("Analyze", type="primary", use_container_width=True):
+            if not api_key:
+                st.warning("Add your Anthropic API key in the sidebar."); st.stop()
+            if not ticker:
+                st.warning("Enter a ticker symbol."); st.stop()
+            try:
+                with st.spinner(f"Fetching market data for {ticker}…"):
+                    d = _fetch(ticker); block = datamod.format_data_block(d)
+            except datamod.DataError as e:
+                st.error(str(e)); st.stop()
+            except Exception as e:
+                st.error(f"Could not fetch data for {ticker}: {e}"); st.stop()
+            try:
+                with st.spinner("Classifying the business…"):
+                    cls = llm.classify(api_key, block, model=llm.HAIKU)
+                with st.spinner("Deriving assumptions for your review…"):
+                    assumptions = llm.derive_assumptions(api_key, block, cls, model=model)
+            except llm.LLMError as e:
+                st.error(str(e)); st.stop()
+            st.session_state.update(fv_stage="assume", fv_ticker=ticker, fv_data=d,
+                                    fv_block=block, fv_cls=cls, fv_assump=assumptions)
+            st.rerun()
+        else:
+            st.caption("Enter a ticker and click Analyze. You'll need your own Anthropic API key.")
+
+    # ---- Stages 1–2: header + assumptions / result ----
+    else:
+        d = st.session_state.fv_data
+        cls = st.session_state.fv_cls
+        ticker = st.session_state.fv_ticker
         st.subheader(f"{d['long_name']} ({ticker})")
         hc1, hc2, hc3 = st.columns(3)
         hc1.metric("Price", f"${d['price']:,.2f}" if d.get("price") else "n/a")
         hc2.metric("Sector", d.get("sector") or "n/a")
         if d.get("target_mean"):
             hc3.metric("Wall St target", f"${d['target_mean']:,.2f}")
+        st.info(f"**Classified as:** {cls.get('archetype', cls['skill'])}  ·  "
+                f"{cls.get('rationale', '')}"
+                + ("  ·  _sum-of-the-parts_" if cls.get("sotp") else ""))
 
-        try:
-            with st.spinner("Classifying the business…"):
-                cls = llm.classify(api_key, block, model=llm.HAIKU)
-            st.info(f"**Classified as:** {cls.get('archetype', cls['skill'])}  ·  "
-                    f"{cls.get('rationale', '')}"
-                    + ("  ·  _sum-of-the-parts_" if cls.get("sotp") else ""))
-            with st.spinner(f"Valuing with {model_label} ({cls['skill']})…"):
-                analysis = llm.value(api_key, ticker, block, cls, model=model, use_web_search=use_web)
-        except llm.LLMError as e:
-            st.error(str(e)); st.stop()
+        if stage == "assume":
+            st.markdown("#### Review assumptions")
+            st.caption("These are my default assumptions. Edit any **value** to use your own, "
+                       "then run — or just proceed with mine.")
+            rows = st.session_state.fv_assump or [{"label": "", "value": "", "note": ""}]
+            df = pd.DataFrame(rows)[["label", "value", "note"]] if rows else pd.DataFrame(
+                columns=["label", "value", "note"])
+            edited = st.data_editor(
+                df, num_rows="dynamic", use_container_width=True, key="fv_assump_editor",
+                column_config={
+                    "label": st.column_config.TextColumn("Assumption"),
+                    "value": st.column_config.TextColumn("Value"),
+                    "note": st.column_config.TextColumn("Basis / note"),
+                })
+            b1, b2 = st.columns(2)
+            go = b1.button("Run valuation with these assumptions", type="primary", use_container_width=True)
+            if b2.button("↺ Start over", use_container_width=True):
+                _reset_fv(); st.rerun()
+            if go:
+                recs = edited.to_dict("records")
+                lines = [f"- {r['label']}: {r['value']}"
+                         + (f"  ({r['note']})" if str(r.get('note') or '').strip() else "")
+                         for r in recs if str(r.get('label') or '').strip()]
+                block_txt = "\n".join(lines) if lines else None
+                try:
+                    with st.spinner(f"Valuing with {model_label} ({cls['skill']})…"):
+                        result = llm.value(api_key, ticker, st.session_state.fv_block, cls,
+                                           model=model, use_web_search=use_web,
+                                           assumptions_block=block_txt)
+                except llm.LLMError as e:
+                    st.error(str(e)); st.stop()
+                st.session_state.update(fv_result=result, fv_stage="done")
+                st.rerun()
 
-        st.markdown(analysis)
-        st.divider()
-        st.caption(f"Model: {model_label} · data: yfinance · not financial advice.")
-    else:
-        st.caption("Enter a ticker and click Analyze. You'll need your own Anthropic API key.")
+        elif stage == "done":
+            st.markdown(st.session_state.fv_result)
+            st.divider()
+            st.caption(f"Model: {model_label} · data: yfinance · not financial advice.")
+            cc1, cc2 = st.columns(2)
+            if cc1.button("↩ Adjust assumptions", use_container_width=True):
+                st.session_state.fv_stage = "assume"
+                st.session_state.pop("fv_result", None); st.rerun()
+            if cc2.button("＋ Analyze another", use_container_width=True):
+                _reset_fv(); st.rerun()
 
 # =============================================================== PORTFOLIO ANALYSIS
 else:

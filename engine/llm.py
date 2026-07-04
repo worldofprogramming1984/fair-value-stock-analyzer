@@ -89,6 +89,37 @@ def classify(api_key: str, data_block: str, model: str = HAIKU) -> dict:
     return data
 
 
+def derive_assumptions(api_key: str, data_block: str, classification: dict,
+                       model: str = SONNET) -> list[dict]:
+    """Ask the model for the key assumptions it would use, for the user to review/edit.
+    Returns a list of {key, label, value, note}; [] if it can't be parsed."""
+    client = _client(api_key)
+
+    def call():
+        return client.messages.create(
+            model=model,
+            max_tokens=700,
+            system=prompts.assumptions_system_prompt(classification["skill"]),
+            messages=[{"role": "user", "content": f"MARKET DATA:\n{data_block}"}],
+        )
+
+    resp = _wrap_api_errors(call)
+    match = re.search(r"\[.*\]", _text(resp), re.DOTALL)
+    if not match:
+        return []
+    try:
+        items = json.loads(match.group(0))
+    except json.JSONDecodeError:
+        return []
+    out = []
+    for it in items:
+        if isinstance(it, dict) and it.get("label"):
+            out.append({"label": str(it.get("label")),
+                        "value": str(it.get("value", "")),
+                        "note": str(it.get("note", ""))})
+    return out
+
+
 def value(
     api_key: str,
     ticker: str,
@@ -96,13 +127,14 @@ def value(
     classification: dict,
     model: str = SONNET,
     use_web_search: bool = True,
+    assumptions_block: str | None = None,
 ) -> str:
     """Run the sector valuation skill; return formatted Markdown."""
     client = _client(api_key)
     system = prompts.value_system_prompt(classification["skill"])
     user = prompts.value_user_prompt(
         ticker, data_block, classification.get("sotp", False),
-        classification.get("segments", []),
+        classification.get("segments", []), assumptions_block=assumptions_block,
     )
     tools = [WEB_SEARCH_TOOL] if use_web_search else []
 

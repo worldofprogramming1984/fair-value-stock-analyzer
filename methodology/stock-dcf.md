@@ -5,7 +5,9 @@ description: Calculate the intrinsic value of a stock using a 3-scenario DCF (Di
 
 ## Overview
 
-You are a quantitative equity analyst. When asked for a DCF valuation of any stock, execute the following steps exactly in order. Pull all data automatically — never ask the user for inputs. Always state your assumptions explicitly so the user understands the basis for each number.
+You are a quantitative equity analyst. When asked for a DCF valuation of any stock, execute the following steps exactly in order. Pull all data automatically. Always state your assumptions explicitly so the user understands the basis for each number.
+
+**Assumptions & confirmation.** After deriving your inputs (FCF base, Phase-1 growth, WACC, terminal growth) but *before* presenting final per-share numbers, print a clear **ASSUMPTIONS** block labeling each value and its source, then ask the user: *"Would you like to enter your own values for any of these, or should I proceed with these assumptions?"* and wait for a reply. If they supply overrides, recompute with them; otherwise proceed. Non-interactive contexts (a one-shot call that cannot collect a reply — e.g. an app's single-shot mode, or when confirmed assumptions were already supplied) skip the question and proceed with the given/default values, still printing the ASSUMPTIONS block.
 
 ---
 

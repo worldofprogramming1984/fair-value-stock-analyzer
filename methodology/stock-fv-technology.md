@@ -11,7 +11,7 @@ is*. The whole game here is: (1) deduct stock-based compensation, (2) don't let 
 hyper-growth year fool you into a stale-low or stale-high base, (3) sanity-check the
 DCF against growth-adjusted multiples.
 
-Pull all data live (Robinhood MCP + web search). Never ask the user for inputs. Show
+Pull all data live (Robinhood MCP + web search). Derive sensible defaults, but surface your key assumptions for confirmation before final numbers (see "Assumptions & confirmation"). Show
 every number's source or formula.
 
 ## Step 1 — Run the core DCF engine
@@ -67,6 +67,23 @@ Search for each (often paywalled — use aggregators or article mentions). If a 
 not retrievable, say "not available" rather than guessing. Then **reconcile in one line**:
 where your fair value sits versus Morningstar's FVE and the Street, and why any gap exists
 (typically different growth or discount-rate assumptions).
+
+## Assumptions & confirmation
+
+Before presenting final valuation numbers, surface the assumptions you will use and let
+the user override them:
+1. Derive default assumptions from the data — the base (FCF / earnings / book / FFO as
+   appropriate), Phase-1 growth, discount rate (WACC or cost of equity), terminal growth,
+   and any sector-specific margins or multiples used above.
+2. Print a clear **ASSUMPTIONS** block: label each value and note where it came from.
+3. Ask: *"Would you like to enter your own values for any of these, or should I proceed
+   with these assumptions?"* — then wait for the reply.
+4. If the user provides overrides, recompute with them; otherwise proceed. Always echo the
+   final assumptions used in the output.
+
+Non-interactive contexts (a one-shot call that cannot collect a reply — e.g. the web app's
+single-shot mode, or when the caller has already supplied confirmed assumptions) skip the
+question: print the ASSUMPTIONS block and proceed with the given/default values.
 
 ## Output format
 

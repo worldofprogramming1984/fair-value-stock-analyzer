@@ -11,7 +11,7 @@ stock looks cheap right before earnings collapse; at the bottom it looks expensi
 before they recover. **Normalize to mid-cycle** and anchor on **asset value (NAV)**,
 because at cycle lows these stocks trade on book/replacement value, not earnings.
 
-Pull all data live (Robinhood MCP + web). Never ask the user for inputs.
+Pull all data live (Robinhood MCP + web). Derive sensible defaults, but surface your key assumptions for confirmation before final numbers (see "Assumptions & confirmation").
 
 ## Step 1 — Gather data
 
@@ -71,6 +71,23 @@ Search for each (often paywalled — use aggregators or article mentions). If a 
 not retrievable, say "not available" rather than guessing. Then **reconcile in one line**:
 where your fair value sits versus Morningstar's FVE and the Street, and why any gap exists
 (typically different growth or discount-rate assumptions).
+
+## Assumptions & confirmation
+
+Before presenting final valuation numbers, surface the assumptions you will use and let
+the user override them:
+1. Derive default assumptions from the data — the base (FCF / earnings / book / FFO as
+   appropriate), Phase-1 growth, discount rate (WACC or cost of equity), terminal growth,
+   and any sector-specific margins or multiples used above.
+2. Print a clear **ASSUMPTIONS** block: label each value and note where it came from.
+3. Ask: *"Would you like to enter your own values for any of these, or should I proceed
+   with these assumptions?"* — then wait for the reply.
+4. If the user provides overrides, recompute with them; otherwise proceed. Always echo the
+   final assumptions used in the output.
+
+Non-interactive contexts (a one-shot call that cannot collect a reply — e.g. the web app's
+single-shot mode, or when the caller has already supplied confirmed assumptions) skip the
+question: print the ASSUMPTIONS block and proceed with the given/default values.
 
 ## Output format
 

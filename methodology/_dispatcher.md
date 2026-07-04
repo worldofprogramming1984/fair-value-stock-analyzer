@@ -68,6 +68,12 @@ unavailable to you, fall back to reading the skill file directly at
 `~/.claude/skills/<skill-name>/SKILL.md` and execute its methodology yourself — the file
 is self-contained.
 
+**Honor the skill's Assumptions & confirmation step.** After the skill derives its inputs
+but before you present final per-share numbers, print the **ASSUMPTIONS** block and ask the
+user whether they want to override any values or proceed. Wait for their reply, then compute
+with their overrides or the defaults. (Skip the question only in a non-interactive context
+that cannot collect a reply.)
+
 ### 5. Return a tight synthesis
 Report back:
 - **Classification + rationale** (which archetype and why; note if you were torn between two).
