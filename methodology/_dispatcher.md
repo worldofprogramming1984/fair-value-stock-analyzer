@@ -77,7 +77,10 @@ that cannot collect a reply.)
 ### 5. Return a tight synthesis
 Report back:
 - **Classification + rationale** (which archetype and why; note if you were torn between two).
-- **Fair value** — Bear / Moderate / Bull per share, and each vs. the current price.
+- **Fair value** — Bear / Moderate / Bull per share, and each vs. the current price. Label
+  the horizon: these are **intrinsic value today** (price typically converges over ~2–3 yrs),
+  NOT a 12-month target. If your Moderate sits above the 12-month Street target, say the gap
+  is horizon, not disagreement.
 - **Which model was used and why it beats a naive DCF** for this business.
 - **Sector sanity multiples**, including **forward P/E and PEG** (using the sector-
   appropriate substitute where those mislead — mid-cycle P/E for cyclicals, P/FFO for

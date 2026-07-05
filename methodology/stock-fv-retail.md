@@ -98,6 +98,21 @@ rather than printing a garbage number:
 - **Distorted GAAP earnings** (acquired-IPR&D / intangible amortization — e.g. some pharma):
   use ADJUSTED forward EPS and state that GAAP is distorted.
 
+## Time horizons (label every target)
+
+State the horizon of each figure so they are comparable — a multi-year intrinsic value and
+a 12-month price target are NOT the same number, and confusing them creates fake
+"disagreement":
+- **Your Bear / Moderate / Bull fair value** = **intrinsic value TODAY** (present value of
+  the DCF / normalized-earnings model) — what the business is worth now. The market price
+  typically converges toward it over **~2–3 years** (wide, thesis-dependent). It is NOT a
+  12-month price target.
+- **Wall Street consensus** = a **12-month** price target (sentiment + near-term multiple).
+- **Morningstar FVE** = a **long-term intrinsic** value (present value, like your own).
+
+If your Moderate sits above the 12-month Street target, say so explicitly and attribute the
+gap to horizon, not to a valuation disagreement.
+
 ## Output format
 
 ```
@@ -115,10 +130,11 @@ Per share:  Bear $XX · Moderate $XX · Bull $XX   (vs price: −X% / ±X% / +X%
 
 ── SANITY ──  EV/EBIT(lease-adj) Xx · EV/EBITDAR Xx · P/E Xx · comps X%
 
+── HORIZON ──  Bear/Moderate/Bull above = intrinsic value TODAY (present value); price typically converges over ~2–3 yrs, thesis-dependent — NOT a 12-month target.
 ── FORWARD P/E & PEG ──  Fwd P/E: Xx · PEG (sustainable growth): X.Xx   [if distorted, substitute + say why: mid-cycle P/E (cyclical) / P/FFO (REIT) / EV-Sales (pre-profit) / adjusted fwd P/E (pharma)]
 ── EXTERNAL CROSSCHECK ──
-Wall St consensus: $X (±X%) · [ratings]
-Morningstar FVE:   $X (price/FVE X.Xx, N★) · moat [none/narrow/wide] · uncertainty [low–very high]
+Wall St consensus (12-mo target): $X (±X%) · [ratings]
+Morningstar FVE (long-term intrinsic): $X (price/FVE X.Xx, N★) · moat [none/narrow/wide] · uncertainty [low–very high]
 Seeking Alpha:     Quant [rating] · Valuation grade [A–F] · [author/WS PT $X]
 Reconciliation:    [where my fair value sits vs. these anchors and why]
 
