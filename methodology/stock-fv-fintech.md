@@ -78,6 +78,25 @@ Non-interactive contexts (a one-shot call that cannot collect a reply — e.g. t
 single-shot mode, or when the caller has already supplied confirmed assumptions) skip the
 question: print the ASSUMPTIONS block and proceed with the given/default values.
 
+## Forward P/E & PEG (always report when recommending)
+
+Alongside the sector sanity multiples, always surface **forward P/E** and **PEG** so the
+recommendation carries a growth-adjusted valuation check:
+- **Forward P/E** = price / next-FY consensus EPS.
+- **PEG** = forward P/E / sustainable long-run EPS growth % (use the durable multi-year
+  growth rate, NOT a one-time surge year). PEG <1 = cheap for the growth; 1-1.5 = fair for
+  a quality compounder; >2 = priced for high conviction.
+
+Use the RIGHT denominator — these two MISLEAD for some businesses, so flag and substitute
+rather than printing a garbage number:
+- **Cyclical / commodity:** forward P/E on peak-or-trough earnings misleads — use a
+  MID-CYCLE-normalized P/E and say so; PEG is not meaningful (price-taker).
+- **REITs:** use forward **P/FFO** (and FFO-growth PEG), not P/E.
+- **Pre-profit / unprofitable growth:** P/E and PEG are undefined — use EV/Sales vs growth.
+- **Banks / insurers:** P/E is fine; PEG is secondary to P/B-vs-ROE.
+- **Distorted GAAP earnings** (acquired-IPR&D / intangible amortization — e.g. some pharma):
+  use ADJUSTED forward EPS and state that GAAP is distorted.
+
 ## Output format
 
 ```
@@ -95,6 +114,7 @@ Per share:  Bear $XX · Moderate $XX · Bull $XX   (vs price: −X% / ±X% / +X%
 
 ── SANITY ──  [EV/FCF Xx · PEG X.Xx] OR [P/B X.Xx vs ROE X% · P/E Xx]
 
+── FORWARD P/E & PEG ──  Fwd P/E: Xx · PEG (sustainable growth): X.Xx   [if distorted, substitute + say why: mid-cycle P/E (cyclical) / P/FFO (REIT) / EV-Sales (pre-profit) / adjusted fwd P/E (pharma)]
 ── EXTERNAL CROSSCHECK ──
 Wall St consensus: $X (±X%) · [ratings]
 Morningstar FVE:   $X (price/FVE X.Xx, N★) · moat [none/narrow/wide] · uncertainty [low–very high]

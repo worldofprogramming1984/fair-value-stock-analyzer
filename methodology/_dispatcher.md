@@ -79,10 +79,12 @@ Report back:
 - **Classification + rationale** (which archetype and why; note if you were torn between two).
 - **Fair value** — Bear / Moderate / Bull per share, and each vs. the current price.
 - **Which model was used and why it beats a naive DCF** for this business.
-- **Sector sanity multiples** and the **external crosscheck** the skill produced — Wall
-  Street consensus, **Morningstar Fair Value Estimate** (+ star/moat/uncertainty), and
-  **Seeking Alpha** (Quant rating + Valuation grade). Reconcile in one line where your
-  fair value sits versus these anchors.
+- **Sector sanity multiples**, including **forward P/E and PEG** (using the sector-
+  appropriate substitute where those mislead — mid-cycle P/E for cyclicals, P/FFO for
+  REITs, EV/Sales for pre-profit, adjusted EPS for distorted-GAAP pharma).
+- The **external crosscheck** the skill produced — Wall Street consensus, **Morningstar
+  Fair Value Estimate** (+ star/moat/uncertainty), and **Seeking Alpha** (Quant rating +
+  Valuation grade). Reconcile in one line where your fair value sits versus these anchors.
 - **One-line verdict** (under / fair / over-valued) and the top 1–2 caveats.
 - If the user is the portfolio owner, add a one-line **portfolio-fit** note (overlap /
   diversification vs. existing holdings) — but keep it to a single line.
