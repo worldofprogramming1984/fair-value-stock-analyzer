@@ -105,7 +105,7 @@ rather than printing a garbage number:
 - **Cyclical / commodity:** forward P/E on peak-or-trough earnings misleads — use a
   MID-CYCLE-normalized P/E and say so; PEG is not meaningful (price-taker).
 - **REITs:** use forward **P/FFO** (and FFO-growth PEG), not P/E.
-- **Pre-profit / unprofitable growth:** P/E and PEG are undefined — use EV/Sales vs growth.
+- **Pre-profit / unprofitable growth:** P/E and PEG are undefined — use **P/S** (and EV/Sales) + **P/S-to-growth** (the PEG analog); route to `stock-fv-unprofitable-growth`.
 - **Banks / insurers:** P/E is fine; PEG is secondary to P/B-vs-ROE.
 - **Distorted GAAP earnings** (acquired-IPR&D / intangible amortization — e.g. some pharma):
   use ADJUSTED forward EPS and state that GAAP is distorted.

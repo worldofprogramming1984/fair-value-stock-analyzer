@@ -30,7 +30,7 @@ MOCK = {
     "industry": "Software", "summary": "A test company. " * 3, "price": 123.45,
     "market_cap": 5e11, "shares_outstanding": 4.05e9, "beta": 1.1,
     "trailing_pe": 30.0, "forward_pe": 25.0, "price_to_book": 8.0, "roe": 0.35,
-    "forward_pe": 25.0, "peg": 1.8,
+    "forward_pe": 25.0, "peg": 1.8, "price_to_sales": 8.0,
     "book_value_per_share": 15.2, "dividend_yield": 0.008, "total_debt": 2e10,
     "total_cash": 6e10, "free_cashflow": 7e10, "target_mean": 150.0,
     "target_high": 180.0, "target_low": 120.0, "num_analysts": 40,
@@ -47,7 +47,7 @@ def test_format_data_block_full():
     assert "mean $150.00" in block
     assert "40 analysts" in block
     assert "$500.00B" in block  # market cap
-    assert "Forward P/E: 25.0" in block and "PEG: 1.8" in block
+    assert "Forward P/E: 25.0" in block and "PEG: 1.8" in block and "P/S: 8.0" in block
 
 
 def test_format_data_block_handles_missing_fields():

@@ -102,6 +102,7 @@ def fetch(ticker: str) -> dict:
         "trailing_pe": _get(info, "trailingPE"),
         "forward_pe": _get(info, "forwardPE"),
         "peg": _get(info, "trailingPegRatio", "pegRatio"),
+        "price_to_sales": _get(info, "priceToSalesTrailing12Months"),
         "price_to_book": _get(info, "priceToBook"),
         "roe": _get(info, "returnOnEquity"),
         "book_value_per_share": _get(info, "bookValue"),
@@ -154,7 +155,7 @@ def format_data_block(d: dict) -> str:
         + (f"{d['shares_outstanding']/1e9:,.2f}B" if d.get('shares_outstanding') else 'n/a'),
         f"Beta (raw): {d.get('beta') if d.get('beta') is not None else 'n/a'}",
         f"Trailing P/E: {d.get('trailing_pe') or 'n/a'}   Forward P/E: {d.get('forward_pe') or 'n/a'}"
-        f"   PEG: {d.get('peg') or 'n/a'}",
+        f"   PEG: {d.get('peg') or 'n/a'}   P/S: {d.get('price_to_sales') or 'n/a'}",
         f"Price/Book: {d.get('price_to_book') or 'n/a'}   ROE: {_pct(d.get('roe'))}   "
         f"Book value/share: {('$'+format(d['book_value_per_share'],',.2f')) if d.get('book_value_per_share') else 'n/a'}",
         f"Dividend yield: {_pct(d.get('dividend_yield')) if d.get('dividend_yield') else 'n/a'}",

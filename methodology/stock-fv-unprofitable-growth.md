@@ -60,7 +60,9 @@ the most useful output. State the implied CAGR and whether history says it's pla
 
 ## Step 4 — Relative-value cross-check
 
-- **EV/Sales vs. forward growth** vs. peers (the workhorse multiple pre-profit).
+- **Price/Sales (P/S) and EV/Sales vs. forward revenue growth** vs. peers (the workhorse
+  multiples pre-profit; P/E is undefined). Add **P/S-to-growth** (P/S ÷ rev-growth %) as the
+  PEG analog.
 - **EV/Gross Profit** for software — normalizes for different gross margins better than
   EV/Sales.
 - If pre-revenue: fall back to TAM × plausible share × peer EV/Sales, or (biotech) route to
@@ -97,24 +99,18 @@ Non-interactive contexts (a one-shot call that cannot collect a reply — e.g. t
 single-shot mode, or when the caller has already supplied confirmed assumptions) skip the
 question: print the ASSUMPTIONS block and proceed with the given/default values.
 
-## Forward P/E & PEG (always report when recommending)
+## Valuation multiples — use PRICE/SALES, not P/E (there are no earnings)
 
-Alongside the sector sanity multiples, always surface **forward P/E** and **PEG** so the
-recommendation carries a growth-adjusted valuation check:
-- **Forward P/E** = price / next-FY consensus EPS.
-- **PEG** = forward P/E / sustainable long-run EPS growth % (use the durable multi-year
-  growth rate, NOT a one-time surge year). PEG <1 = cheap for the growth; 1-1.5 = fair for
-  a quality compounder; >2 = priced for high conviction.
-
-Use the RIGHT denominator — these two MISLEAD for some businesses, so flag and substitute
-rather than printing a garbage number:
-- **Cyclical / commodity:** forward P/E on peak-or-trough earnings misleads — use a
-  MID-CYCLE-normalized P/E and say so; PEG is not meaningful (price-taker).
-- **REITs:** use forward **P/FFO** (and FFO-growth PEG), not P/E.
-- **Pre-profit / unprofitable growth:** P/E and PEG are undefined — use EV/Sales vs growth.
-- **Banks / insurers:** P/E is fine; PEG is secondary to P/B-vs-ROE.
-- **Distorted GAAP earnings** (acquired-IPR&D / intangible amortization — e.g. some pharma):
-  use ADJUSTED forward EPS and state that GAAP is distorted.
+For a pre-profit company **P/E and PEG are undefined — do NOT report them.** Use sales-based
+multiples instead, and keep a growth-adjusted check:
+- **Price/Sales (P/S)** = market cap / revenue — the primary multiple here. Also show
+  **EV/Sales** (enterprise value / revenue — the more rigorous cousin that accounts for
+  debt & cash), and **EV/Gross Profit** for software (normalizes for gross-margin differences).
+- **Growth-adjusted: P/S-to-growth** = P/S ÷ revenue-growth % — the PEG analog. "Price to
+  growth" still applies, just on **sales** instead of earnings; lower is cheaper for the
+  growth. Benchmark on an **EV/Sales-vs-forward-revenue-growth** basis vs. peers.
+- A high P/S is only justified by high, durable revenue growth **and** a credible path to a
+  healthy mature margin (Step 2). Report P/E / PEG only once the company turns profitable.
 
 ## Time horizons (label every target)
 
@@ -152,10 +148,10 @@ Per share:   $XX      $XX        $XX     (vs price: −X% / ±X% / +X%)
 
 ── REVERSE DCF ──  current price implies ~X% rev CAGR + X% terminal margin → [plausible?]
 
-── RELATIVE ──  EV/Sales Xx (fwd) vs peers · EV/Gross Profit Xx
+── RELATIVE ──  P/S Xx · EV/Sales Xx (fwd) vs peers · P/S-to-growth X.Xx · EV/Gross Profit Xx
 
 ── HORIZON ──  Bear/Moderate/Bull above = intrinsic value TODAY (present value); price typically converges over ~2–3 yrs, thesis-dependent — NOT a 12-month target.
-── FORWARD P/E & PEG ──  Fwd P/E: Xx · PEG (sustainable growth): X.Xx   [if distorted, substitute + say why: mid-cycle P/E (cyclical) / P/FFO (REIT) / EV-Sales (pre-profit) / adjusted fwd P/E (pharma)]
+── P/S & GROWTH-ADJUSTED ──  P/S: Xx · EV/Sales: Xx (fwd) · P/S-to-growth: X.Xx (P/S ÷ rev-growth%) · EV/Gross-Profit: Xx   [P/E & PEG undefined — no earnings]
 ── EXTERNAL CROSSCHECK ──
 Wall St consensus (12-mo target): $X (±X%) · [ratings]
 Morningstar FVE (long-term intrinsic): $X (price/FVE X.Xx, N★) · moat [none/narrow/wide] · uncertainty [low–very high]
